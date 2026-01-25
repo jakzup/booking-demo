@@ -54,7 +54,7 @@ class Profile extends Component
         $user = Auth::user();
 
         if ($user->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('home', absolute: false));
+            $this->redirectIntended(default: route('home', ['locale' => app()->getLocale()], absolute: false));
 
             return;
         }
@@ -77,3 +77,4 @@ class Profile extends Component
             || (Auth::user() instanceof MustVerifyEmail && Auth::user()->hasVerifiedEmail());
     }
 }
+
