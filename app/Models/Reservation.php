@@ -15,11 +15,17 @@ class Reservation extends Model
         'room_id',
         'check_in_date',
         'check_out_date',
+        'total_price',
+        'status',
+        'contact_name',
+        'email',
+        'phone',
     ];
 
     protected $casts = [
         'check_in_date' => 'date',
         'check_out_date' => 'date',
+        'total_price' => 'decimal:2',
     ];
 
     public function user()
