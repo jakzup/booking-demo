@@ -30,8 +30,8 @@ return [
     */
 
     'component_namespaces' => [
-        'layouts' => resource_path('views/layouts'),
-        'pages' => resource_path('views/pages'),
+        // 'layouts' => resource_path('views/layouts'),
+        // 'pages' => resource_path('views/pages'),
     ],
 
     /*
@@ -44,7 +44,7 @@ return [
     |
     */
 
-    'component_layout' => 'layouts::app',
+    'component_layout' => 'layouts.app',
 
     /*
     |---------------------------------------------------------------------------

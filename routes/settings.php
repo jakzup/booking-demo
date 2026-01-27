@@ -6,6 +6,7 @@ use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+use Livewire\Livewire;
 
 Route::middleware(['auth'])->group(function () {
     // Locale-aware redirects - redirect to appropriate profile based on current locale
@@ -17,18 +18,18 @@ Route::middleware(['auth'])->group(function () {
         return redirect(route_localized('profile.edit'));
     });
 
-    Route::livewire('settings/profile', Profile::class)->name('profile.edit');
-    Route::livewire('nastavitve/profil', Profile::class)->name('profile.edit.sl');
+    Route::get('settings/profile', Profile::class)->name('profile.edit');
+    Route::get('nastavitve/profil', Profile::class)->name('profile.edit.sl');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::livewire('settings/password', Password::class)->name('user-password.edit');
-    Route::livewire('nastavitve/geslo', Password::class)->name('user-password.edit.sl');
+    Route::get('settings/password', Password::class)->name('user-password.edit');
+    Route::get('nastavitve/geslo', Password::class)->name('user-password.edit.sl');
     
-    Route::livewire('settings/appearance', Appearance::class)->name('appearance.edit');
-    Route::livewire('nastavitve/izgled', Appearance::class)->name('appearance.edit.sl');
+    Route::get('settings/appearance', Appearance::class)->name('appearance.edit');
+    Route::get('nastavitve/izgled', Appearance::class)->name('appearance.edit.sl');
 
-    Route::livewire('settings/two-factor', TwoFactor::class)
+    Route::get('settings/two-factor', TwoFactor::class)
         ->middleware(
             when(
                 Features::canManageTwoFactorAuthentication()
@@ -39,7 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         )
         ->name('two-factor.show');
     
-    Route::livewire('nastavitve/dvostopenjska-overitev', TwoFactor::class)
+    Route::get('nastavitve/dvostopenjska-overitev', TwoFactor::class)
         ->middleware(
             when(
                 Features::canManageTwoFactorAuthentication()

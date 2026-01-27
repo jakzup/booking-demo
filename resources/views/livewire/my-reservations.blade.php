@@ -10,7 +10,7 @@
     @if($reservations->isEmpty())
         <div class="bg-gray-100 p-8 text-center rounded-lg">
             <p class="text-gray-600">Trenutno nimate nobenih rezervacij.</p>
-            <a href="{{ route('rooms.index') }}" class="mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+            <a href="{{ route('home') }}" class="mt-4 inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
                 Prebrskaj sobe
             </a>
         </div>

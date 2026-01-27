@@ -22,7 +22,7 @@
                     <p class="text-gray-600 mb-6">Vaša rezervacija je bila uspešno oddana.</p>
                     <div class="space-y-2">
                         <a href="{{ route('reservations.index') }}" class="block w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700">Moje rezervacije</a>
-                        <a href="{{ route('rooms.index') }}" class="block w-full bg-gray-200 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-300">Nazaj na sobe</a>
+                        <a href="{{ route('home') }}" class="block w-full bg-gray-200 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-300">Nazaj na sobe</a>
                     </div>
                 </div>
             @else
