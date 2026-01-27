@@ -20,7 +20,7 @@
                 <div class="border rounded-lg p-6 {{ $reservation->status === 'cancelled' ? 'bg-gray-50' : 'bg-white' }}">
                     <div class="flex justify-between items-start">
                         <div class="flex-1">
-                            <h3 class="text-xl font-semibold mb-2">{{ $reservation->room->title }}</h3>
+                            <h3 class="text-xl font-semibold mb-2">{{ $reservation->room?->title ?? 'Room Not Available' }}</h3>
                             
                             <div class="grid grid-cols-2 gap-4 mb-4">
                                 <div>

@@ -13,6 +13,9 @@
                 <flux:navbar.item icon="layout-grid" :href="route('home')" :current="request()->routeIs('home')" wire:navigate>
                     {{ __('Home') }}
                 </flux:navbar.item>
+                <flux:navbar.item icon="calendar" :href="route('reservations.index')" :current="request()->routeIs('reservations.index*')" wire:navigate>
+                    {{ __('My Reservations') }}
+                </flux:navbar.item>
             </flux:navbar>
 
             <flux:spacer />
@@ -34,6 +37,9 @@
                 <flux:sidebar.group :heading="__('Platform')">
                     <flux:sidebar.item icon="layout-grid" :href="route('home')" :current="request()->routeIs('home')" wire:navigate>
                         {{ __('Home')  }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="calendar" :href="route('reservations.index')" :current="request()->routeIs('reservations.index*')" wire:navigate>
+                        {{ __('My Reservations') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>

@@ -80,6 +80,6 @@ class RoomBooking extends Component
 
     public function render()
     {
-        return view('livewire.room-booking');
+        return view('livewire.room-booking')->layout('layouts.app.header');
     }
 }

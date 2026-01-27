@@ -17,7 +17,7 @@ class MyReservations extends Component
 
         return view('livewire.my-reservations', [
             'reservations' => $reservations
-        ]);
+        ])->layout('layouts.app.header');
     }
 
     public function cancelReservation($id)
