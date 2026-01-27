@@ -17,7 +17,7 @@
                 
                 <div class="flex items-baseline gap-2">
                     <flux:heading size="xl">${{ $room->price_per_night }}</flux:heading>
-                    <flux:subheading>{{ __('/ night') }}</flux:subheading>
+                    <flux:subheading>{{ __('rooms.per_night') }}</flux:subheading>
                 </div>
             </flux:card>
         </div>
@@ -31,25 +31,25 @@
                     </div>
                     
                     <flux:heading size="xl" class="mb-2 text-green-600">
-                        {{ __('Reservation Successful!') }}
+                        {{ __('reservations.reservation_successful') }}
                     </flux:heading>
                     
                     <flux:subheading class="mb-6">
-                        {{ __('Your reservation has been submitted successfully.') }}
+                        {{ __('reservations.reservation_submitted') }}
                     </flux:subheading>
                     
                     <div class="space-y-3">
                         <flux:button :href="route('reservations.index')" wire:navigate variant="primary" class="w-full">
-                            {{ __('My Reservations') }}
+                            {{ __('reservations.my_reservations') }}
                         </flux:button>
                         <flux:button :href="route('home')" wire:navigate variant="ghost" class="w-full">
-                            {{ __('Back to Rooms') }}
+                            {{ __('reservations.back_to_rooms') }}
                         </flux:button>
                     </div>
                 </flux:card>
             @else
                 <flux:card>
-                    <flux:heading size="lg" class="mb-6">{{ __('Book This Room') }}</flux:heading>
+                    <flux:heading size="lg" class="mb-6">{{ __('rooms.book_this_room') }}</flux:heading>
                     
                     <!-- Step Indicator -->
                     <div class="flex items-center mb-8">
@@ -68,13 +68,13 @@
                         <!-- Step 1: Dates -->
                         <form wire:submit="nextStep">
                             <flux:field>
-                                <flux:label>{{ __('Check-in Date') }}</flux:label>
+                                <flux:label>{{ __('reservations.check_in_date') }}</flux:label>
                                 <flux:input type="date" wire:model="checkInDate" />
                                 <flux:error name="checkInDate" />
                             </flux:field>
 
                             <flux:field>
-                                <flux:label>{{ __('Check-out Date') }}</flux:label>
+                                <flux:label>{{ __('reservations.check_out_date') }}</flux:label>
                                 <flux:input type="date" wire:model.live="checkOutDate" />
                                 <flux:error name="checkOutDate" />
                             </flux:field>
@@ -82,7 +82,7 @@
                             @if($this->totalPrice > 0)
                                 <div class="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg mb-6">
                                     <flux:heading size="lg">
-                                        {{ __('Total Price') }}: ${{ number_format($this->totalPrice, 2) }}
+                                        {{ __('rooms.total_price') }}: ${{ number_format($this->totalPrice, 2) }}
                                     </flux:heading>
                                 </div>
                             @endif
@@ -114,11 +114,11 @@
 
                             <div class="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg mb-6">
                                 <div class="text-sm mb-2">
-                                    <p><strong>{{ __('Check-in') }}:</strong> {{ \Carbon\Carbon::parse($checkInDate)->format('d.m.Y') }}</p>
-                                    <p><strong>{{ __('Check-out') }}:</strong> {{ \Carbon\Carbon::parse($checkOutDate)->format('d.m.Y') }}</p>
+                                    <p><strong>{{ __('reservations.check_in') }}:</strong> {{ \Carbon\Carbon::parse($checkInDate)->format('d.m.Y') }}</p>
+                                    <p><strong>{{ __('reservations.check_out') }}:</strong> {{ \Carbon\Carbon::parse($checkOutDate)->format('d.m.Y') }}</p>
                                 </div>
                                 <flux:heading size="lg">
-                                    {{ __('Total Price') }}: ${{ number_format($this->totalPrice, 2) }}
+                                    {{ __('rooms.total_price') }}: ${{ number_format($this->totalPrice, 2) }}
                                 </flux:heading>
                             </div>
 
@@ -127,7 +127,7 @@
                                     {{ __('Back') }}
                                 </flux:button>
                                 <flux:button type="submit" variant="primary" class="flex-1">
-                                    {{ __('Confirm Reservation') }}
+                                    {{ __('reservations.confirm_reservation') }}
                                 </flux:button>
                             </div>
                         </form>

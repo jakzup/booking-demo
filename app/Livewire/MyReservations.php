@@ -28,6 +28,6 @@ class MyReservations extends Component
 
         $reservation->update(['status' => 'cancelled']);
         
-        session()->flash('message', 'Reservation cancelled successfully.');
+        session()->flash('message', __('reservations.cancelled_successfully'));
     }
 }

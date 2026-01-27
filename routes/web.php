@@ -30,6 +30,11 @@ Route::group([
         ->middleware('auth')
         ->name('logout');
     
+    // Password confirmation route (for Fortify's confirmPassword feature)
+    Route::get('user/confirm-password', fn() => view('livewire.auth.confirm-password'))
+        ->middleware('auth')
+        ->name('password.confirm');
+    
     // Room routes - require authentication
     Route::middleware(['auth'])->group(function () {
         Route::get('/', RoomList::class)->name('home');

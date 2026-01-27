@@ -10,21 +10,28 @@
             <flux:sidebar.toggle class="lg:hidden mr-2" icon="bars-2" inset="left" />
 
             <flux:navbar class="-mb-px max-lg:hidden">
-                <flux:navbar.item icon="layout-grid" :href="route('home')" :current="request()->routeIs('home')" wire:navigate>
-                    {{ __('Home') }}
-                </flux:navbar.item>
-                <flux:navbar.item icon="calendar" :href="route('reservations.index')" :current="request()->routeIs('reservations.index*')" wire:navigate>
-                    {{ __('My Reservations') }}
+                <flux:navbar.item :href="route('home')" :current="request()->routeIs('home')" wire:navigate>
+                    <span class="text-xl font-bold uppercase">{{ __('Booking Manager') }}</span>
                 </flux:navbar.item>
             </flux:navbar>
 
             <flux:spacer />
 
+            @auth
+                <flux:navbar class="-mb-px max-lg:hidden">
+                    <flux:navbar.item icon="calendar" :href="route('reservations.index')" :current="request()->routeIs('reservations.index*')" wire:navigate>
+                        {{ __('My Reservations') }}
+                    </flux:navbar.item>
+                </flux:navbar>
+            @endauth
+
             <flux:navbar class="me-1.5 space-x-0.5 rtl:space-x-reverse py-0!">
                 <x-language-selector />
             </flux:navbar>
 
-            <x-desktop-user-menu />
+            @auth
+                <x-desktop-user-menu />
+            @endauth
         </flux:header>
 
         <!-- Mobile Menu -->
@@ -35,12 +42,14 @@
 
             <flux:sidebar.nav>
                 <flux:sidebar.group :heading="__('Platform')">
-                    <flux:sidebar.item icon="layout-grid" :href="route('home')" :current="request()->routeIs('home')" wire:navigate>
-                        {{ __('Home')  }}
+                    <flux:sidebar.item :href="route('home')" :current="request()->routeIs('home')" wire:navigate>
+                        <span class="text-xl font-bold uppercase">{{ __('Booking Manager') }}</span>
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="calendar" :href="route('reservations.index')" :current="request()->routeIs('reservations.index*')" wire:navigate>
-                        {{ __('My Reservations') }}
-                    </flux:sidebar.item>
+                    @auth
+                        <flux:sidebar.item icon="calendar" :href="route('reservations.index')" :current="request()->routeIs('reservations.index*')" wire:navigate>
+                            {{ __('My Reservations') }}
+                        </flux:sidebar.item>
+                    @endauth
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
