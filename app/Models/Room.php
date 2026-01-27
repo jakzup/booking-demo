@@ -78,8 +78,8 @@ class Room extends Model
     
     public function getSlugAttribute()
     {
-        $slug = \DB::table('room_slugs')
-            ->where('room_id', $this->id)
+        // Use Twill's slug relationship to get the active slug for current locale
+        $slug = $this->slugs()
             ->where('locale', app()->getLocale())
             ->where('active', true)
             ->value('slug');
