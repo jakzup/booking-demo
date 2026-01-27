@@ -101,7 +101,9 @@ return [
     |
     */
 
-    'middleware' => ['web'],
+    'middleware' => ['web', 'localeSessionRedirect', 'localizationRedirect'],
+    
+    'prefix_path' => '{locale}',
 
     /*
     |--------------------------------------------------------------------------
@@ -130,7 +132,7 @@ return [
     |
     */
 
-    'views' => true,
+    'views' => false,
 
     /*
     |--------------------------------------------------------------------------

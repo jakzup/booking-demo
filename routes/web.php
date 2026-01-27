@@ -14,9 +14,21 @@ Route::group([
         ->middleware('guest')
         ->name('login');
     
+    Route::post(LaravelLocalization::transRoute('routes.login'), [Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class, 'store'])
+        ->middleware('guest')
+        ->name('login.store');
+    
     Route::get(LaravelLocalization::transRoute('routes.register'), fn() => view('livewire.auth.register'))
         ->middleware('guest')
         ->name('register');
+    
+    Route::post(LaravelLocalization::transRoute('routes.register'), [Laravel\Fortify\Http\Controllers\RegisteredUserController::class, 'store'])
+        ->middleware('guest')
+        ->name('register.store');
+    
+    Route::post('logout', [Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class, 'destroy'])
+        ->middleware('auth')
+        ->name('logout');
     
     // Room routes - require authentication
     Route::middleware(['auth'])->group(function () {

@@ -23,7 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'localeViewPath' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         ]);
         
-        $middleware->redirectGuestsTo(fn() => '/' . default_locale() . '/login');
+        $middleware->redirectGuestsTo(fn() => route('login'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
