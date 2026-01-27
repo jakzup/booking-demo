@@ -19,10 +19,10 @@
         </div>
         <flux:menu.separator />
         <flux:menu.radio.group>
-            <flux:menu.item :href="route_localized('reservations.index')" icon="calendar" wire:navigate>
+            <flux:menu.item :href="route('reservations.index')" icon="calendar" wire:navigate>
                 {{ __('My Reservations') }}
             </flux:menu.item>
-            <flux:menu.item :href="route_localized('profile.edit')" icon="cog" wire:navigate>
+            <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
                 {{ __('Settings') }}
             </flux:menu.item>
             <form method="POST" action="{{ route('logout') }}" class="w-full">

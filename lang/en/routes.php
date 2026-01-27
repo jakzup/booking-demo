@@ -1,10 +1,15 @@
 <?php
 
 return [
+    'login' => 'login',
+    'register' => 'register',
+    'rooms' => 'rooms/{room}',
     'my-reservations' => 'my-reservations',
-    'settings' => 'settings',
-    'profile' => 'profile',
-    'password' => 'password',
-    'appearance' => 'appearance',
-    'two-factor' => 'two-factor',
+    
+    'settings' => [
+        'profile' => 'settings/profile',
+        'password' => 'settings/password',
+        'appearance' => 'settings/appearance',
+        'two-factor' => 'settings/two-factor',
+    ],
 ];

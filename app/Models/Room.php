@@ -76,4 +76,15 @@ class Room extends Model
         return $this->where('id', $value)->firstOrFail();
     }
     
+    public function getSlugAttribute()
+    {
+        $slug = \DB::table('room_slugs')
+            ->where('room_id', $this->id)
+            ->where('locale', app()->getLocale())
+            ->where('active', true)
+            ->value('slug');
+            
+        return $slug ?? $this->id;
+    }
+    
 }

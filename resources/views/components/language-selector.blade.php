@@ -1,33 +1,59 @@
 @php
-    $currentRouteName = request()->route()->getName();
-    $currentParams = request()->route()->parameters();
+    use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
     
-    // Try to generate URLs for both locales using current route
-    try {
-        // For English
-        if ($currentRouteName && str_ends_with($currentRouteName, '.sl')) {
-            $enRouteName = str_replace('.sl', '', $currentRouteName);
+    // Get current route info
+    $route = request()->route();
+    $routeName = $route ? $route->getName() : null;
+    $params = $route ? $route->parameters() : [];
+    
+    // Extract route keys from model instances
+    $cleanParams = [];
+    foreach ($params as $key => $value) {
+        if (is_object($value) && method_exists($value, 'getRouteKey')) {
+            $cleanParams[$key] = $value->getRouteKey();
         } else {
-            $enRouteName = $currentRouteName;
+            $cleanParams[$key] = $value;
         }
-        $enUrl = $enRouteName ? route($enRouteName, array_merge($currentParams, ['locale' => 'en'])) : '/en';
+    }
+    
+    // Map route names to translation keys
+    $routeToTransKey = [
+        'login' => 'login',
+        'register' => 'register',
+        'rooms.show' => 'rooms',
+        'reservations.index' => 'my-reservations',
+        'profile.edit' => 'settings.profile',
+        'user-password.edit' => 'settings.password',
+        'appearance.edit' => 'settings.appearance',
+        'two-factor.show' => 'settings.two-factor',
+    ];
+    
+    if ($routeName && isset($routeToTransKey[$routeName])) {
+        $transKey = 'routes.' . $routeToTransKey[$routeName];
+        $currentLocale = app()->getLocale();
         
-        // For Slovenian
-        $slRouteName = $currentRouteName && !str_ends_with($currentRouteName, '.sl') ? $currentRouteName . '.sl' : $currentRouteName;
-        $slUrl = \Illuminate\Support\Facades\Route::has($slRouteName) 
-            ? route($slRouteName, array_merge($currentParams, ['locale' => 'sl'])) 
-            : '/sl';
-    } catch (\Exception $e) {
-        // Fallback to simple path replacement if route generation fails
-        $currentPath = request()->path();
-        if (preg_match('/^(en|sl)(\/.*)?$/', $currentPath, $matches)) {
-            $afterLocale = $matches[2] ?? '';
-            $enUrl = '/en' . $afterLocale;
-            $slUrl = '/sl' . $afterLocale;
-        } else {
-            $enUrl = '/en';
-            $slUrl = '/sl';
+        // Generate English URL
+        app()->setLocale('en');
+        $enPath = trans($transKey);
+        foreach ($cleanParams as $key => $value) {
+            $enPath = str_replace('{' . $key . '}', $value, $enPath);
         }
+        $enUrl = url('/en/' . $enPath);
+        
+        // Generate Slovenian URL
+        app()->setLocale('sl');
+        $slPath = trans($transKey);
+        foreach ($cleanParams as $key => $value) {
+            $slPath = str_replace('{' . $key . '}', $value, $slPath);
+        }
+        $slUrl = url('/sl/' . $slPath);
+        
+        // Restore locale
+        app()->setLocale($currentLocale);
+    } else {
+        // Fallback for routes without translation (like home)
+        $enUrl = LaravelLocalization::getLocalizedURL('en');
+        $slUrl = LaravelLocalization::getLocalizedURL('sl');
     }
 @endphp
 
