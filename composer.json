@@ -97,6 +97,12 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "platform": {
+            "ext-openssl": "1.0",
+            "ext-pdo": "1.0",
+            "ext-mbstring": "1.0",
+            "php": "8.3.0"
         }
     },
     "minimum-stability": "stable",
