@@ -39,4 +39,22 @@ return [
     'check_out_date' => 'Datum odjave',
     'confirm_reservation' => 'Potrdi rezervacijo',
     'room_not_available' => 'Soba ni na voljo',
+    'full_name' => 'Ime in priimek',
+    'email_label' => 'E-pošta',
+    'phone_label' => 'Telefon',
+    
+    // Validation messages
+    'check_in_date_required' => 'Datum prijave je obvezen.',
+    'check_in_date_invalid' => 'Datum prijave mora biti veljaven datum.',
+    'check_in_date_past' => 'Datum prijave ne sme biti v preteklosti.',
+    'check_out_date_required' => 'Datum odjave je obvezen.',
+    'check_out_date_invalid' => 'Datum odjave mora biti veljaven datum.',
+    'check_out_date_invalid_range' => 'Datum odjave mora biti na isti dan ali po datumu prijave.',
+    'dates_unavailable' => 'Izbrani datumi niso na voljo.',
+    'contact_name_required' => 'Ime kontakta je obvezen.',
+    'contact_name_invalid' => 'Ime kontakta mora biti besedilo.',
+    'contact_name_max' => 'Ime kontakta ne sme biti daljše od 255 znakov.',
+    'email_required' => 'E-pošta je obvezna.',
+    'email_invalid' => 'E-pošta mora biti veljaven e-poštni naslov.',
+    'phone_required' => 'Telefonska številka je obvezna.',
 ];

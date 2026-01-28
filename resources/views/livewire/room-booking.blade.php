@@ -4,7 +4,7 @@
         <div>
             <flux:card>
                 @if($room->hasImage('cover'))
-                    <img src="{{ $room->image('cover') }}" alt="{{ $room->title }}" class="w-full rounded-lg -mt-6 -mx-6 mb-6">
+                    <img src="{{ $room->image('cover') }}" alt="{{ $room->title }}" class="w-full rounded-lg mb-6">
                 @endif
                 
                 <flux:heading size="xl" class="mb-4">{{ $room->title }}</flux:heading>
@@ -67,15 +67,15 @@
                     @if($step === 1)
                         <!-- Step 1: Dates -->
                         <form wire:submit="nextStep">
-                            <flux:field>
+                            <flux:field class="mb-6">
                                 <flux:label>{{ __('reservations.check_in_date') }}</flux:label>
-                                <flux:input type="date" wire:model="checkInDate" />
+                                <flux:input type="date" wire:model="checkInDate" @click="$el.showPicker?.()" />
                                 <flux:error name="checkInDate" />
                             </flux:field>
 
-                            <flux:field>
+                            <flux:field class="mb-6">
                                 <flux:label>{{ __('reservations.check_out_date') }}</flux:label>
-                                <flux:input type="date" wire:model.live="checkOutDate" />
+                                <flux:input type="date" wire:model.live="checkOutDate" @click="$el.showPicker?.()" />
                                 <flux:error name="checkOutDate" />
                             </flux:field>
 
@@ -94,20 +94,20 @@
                     @else
                         <!-- Step 2: Contact Details -->
                         <form wire:submit="book">
-                            <flux:field>
-                                <flux:label>{{ __('Full Name') }}</flux:label>
+                            <flux:field class="mb-6">
+                                <flux:label>{{ __('reservations.full_name') }}</flux:label>
                                 <flux:input type="text" wire:model="contactName" />
                                 <flux:error name="contactName" />
                             </flux:field>
 
-                            <flux:field>
-                                <flux:label>{{ __('Email') }}</flux:label>
+                            <flux:field class="mb-6">
+                                <flux:label>{{ __('reservations.email_label') }}</flux:label>
                                 <flux:input type="email" wire:model="email" />
                                 <flux:error name="email" />
                             </flux:field>
 
-                            <flux:field>
-                                <flux:label>{{ __('Phone') }}</flux:label>
+                            <flux:field class="mb-6">
+                                <flux:label>{{ __('reservations.phone_label') }}</flux:label>
                                 <flux:input type="tel" wire:model="phone" />
                                 <flux:error name="phone" />
                             </flux:field>

@@ -39,4 +39,22 @@ return [
     'check_out_date' => 'Check-out Date',
     'confirm_reservation' => 'Confirm Reservation',
     'room_not_available' => 'Room Not Available',
+    'full_name' => 'Full Name',
+    'email_label' => 'Email',
+    'phone_label' => 'Phone',
+    
+    // Validation messages
+    'check_in_date_required' => 'Check-in date is required.',
+    'check_in_date_invalid' => 'Check-in date must be a valid date.',
+    'check_in_date_past' => 'Check-in date cannot be in the past.',
+    'check_out_date_required' => 'Check-out date is required.',
+    'check_out_date_invalid' => 'Check-out date must be a valid date.',
+    'check_out_date_invalid_range' => 'Check-out date must be on the same day or after the check-in date.',
+    'dates_unavailable' => 'Selected dates are not available.',
+    'contact_name_required' => 'Contact name is required.',
+    'contact_name_invalid' => 'Contact name must be text.',
+    'contact_name_max' => 'Contact name must not exceed 255 characters.',
+    'email_required' => 'Email is required.',
+    'email_invalid' => 'Email must be a valid email address.',
+    'phone_required' => 'Phone number is required.',
 ];

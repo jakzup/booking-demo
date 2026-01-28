@@ -19,8 +19,8 @@ class RoomBooking extends Component
     public $reservationSuccess = false;
 
     protected $rules = [
-        'checkInDate' => 'required|date|after:today',
-        'checkOutDate' => 'required|date|after:checkInDate',
+        'checkInDate' => 'required|date|after_or_equal:today',
+        'checkOutDate' => 'required|date|after_or_equal:checkInDate',
         'contactName' => 'required|string|max:255',
         'email' => 'required|email|max:255',
         'phone' => 'required|string|max:20',
@@ -47,9 +47,28 @@ class RoomBooking extends Component
     public function nextStep()
     {
         $this->validate([
-            'checkInDate' => 'required|date|after:today',
-            'checkOutDate' => 'required|date|after:checkInDate',
-        ]);
+            'checkInDate' => 'required|date|after_or_equal:today',
+            'checkOutDate' => 'required|date|after_or_equal:checkInDate',
+        ], $this->getMessages());
+
+        // Check for conflicting reservations
+        $conflict = Reservation::where('room_id', $this->room->id)
+            ->whereIn('status', ['confirmed', 'pending'])
+            ->whereNull('deleted_at')
+            ->where(function ($query) {
+                $query->whereBetween('check_in_date', [$this->checkInDate, $this->checkOutDate])
+                    ->orWhereBetween('check_out_date', [$this->checkInDate, $this->checkOutDate])
+                    ->orWhere(function ($q) {
+                        $q->where('check_in_date', '<=', $this->checkInDate)
+                            ->where('check_out_date', '>=', $this->checkOutDate);
+                    });
+            })
+            ->exists();
+
+        if ($conflict) {
+            $this->addError('checkOutDate', __('reservations.dates_unavailable'));
+            return;
+        }
 
         $this->step = 2;
     }
@@ -61,7 +80,7 @@ class RoomBooking extends Component
 
     public function book()
     {
-        $this->validate();
+        $this->validate($this->rules, $this->getMessages());
 
         Reservation::create([
             'user_id' => Auth::id(),
@@ -76,6 +95,24 @@ class RoomBooking extends Component
         ]);
 
         $this->reservationSuccess = true;
+    }
+
+    protected function getMessages()
+    {
+        return [
+            'checkInDate.required' => __('reservations.check_in_date_required'),
+            'checkInDate.date' => __('reservations.check_in_date_invalid'),
+            'checkInDate.after_or_equal' => __('reservations.check_in_date_past'),
+            'checkOutDate.required' => __('reservations.check_out_date_required'),
+            'checkOutDate.date' => __('reservations.check_out_date_invalid'),
+            'checkOutDate.after_or_equal' => __('reservations.check_out_date_invalid_range'),
+            'contactName.required' => __('reservations.contact_name_required'),
+            'contactName.string' => __('reservations.contact_name_invalid'),
+            'contactName.max' => __('reservations.contact_name_max'),
+            'email.required' => __('reservations.email_required'),
+            'email.email' => __('reservations.email_invalid'),
+            'phone.required' => __('reservations.phone_required'),
+        ];
     }
 
     public function render()
