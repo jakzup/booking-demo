@@ -1,0 +1,101 @@
+services:
+  web:
+    image: nginx:alpine # Using the default Nginx image with custom configuration.
+    volumes:
+      # Mount the application code for live updates
+      - ./:/var/www
+      # Mount the Nginx configuration file
+      - ./docker/development/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      # Map port 8080 inside the container to the port specified by 'NGINX_PORT' on the host machine
+      - "8080:80"
+    environment:
+      - NGINX_HOST=localhost
+    networks:
+      - laravel-development
+    depends_on:
+      php-fpm:
+        condition: service_started # Wait for php-fpm to start
+
+  php-fpm:
+    # For the php-fpm service, we will use our common PHP-FPM Dockerfile with the development target
+    build:
+      context: .
+      dockerfile: ./docker/common/php-fpm/Dockerfile
+      target: development
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+        XDEBUG_ENABLED: ${XDEBUG_ENABLED:-true}
+        XDEBUG_MODE: develop,coverage,debug,profile
+        XDEBUG_HOST: ${XDEBUG_HOST:-host.docker.internal}
+        XDEBUG_IDE_KEY: ${XDEBUG_IDE_KEY:-DOCKER}
+        XDEBUG_LOG: /dev/stdout
+        XDEBUG_LOG_LEVEL: 0
+    env_file:
+      # Load the environment variables from the Laravel application
+      - .env
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      # Mount the application code for live updates
+      - ./:/var/www
+    networks:
+      - laravel-development
+    depends_on:
+      mysql:
+        condition: service_healthy # Wait for mysql to be healthy
+
+  wworkspace:
+    build:
+      context: .
+      dockerfile: ./docker/development/workspace/Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+        XDEBUG_ENABLED: ${XDEBUG_ENABLED:-true}
+        XDEBUG_MODE: develop,coverage,debug,profile
+        XDEBUG_HOST: ${XDEBUG_HOST:-host.docker.internal}
+        XDEBUG_IDE_KEY: ${XDEBUG_IDE_KEY:-DOCKER}
+        XDEBUG_LOG: /dev/stdout
+        XDEBUG_LOG_LEVEL: 0
+    #user: "${UID:-1000}:${GID:-1000}"
+    user: "0:0"
+    working_dir: /var/www
+    command: sh -c "npm install && npm run dev"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./:/var/www:cached
+      - node-modules:/var/www/node_modules
+    ports:
+      - "5173:5173"
+    networks:
+      - laravel-development
+
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE:-app}"
+      MYSQL_USER: "${DB_USERNAME:-laravel}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:-secret}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:-secret}"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - laravel-development
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_PASSWORD}"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+
+
+networks:
+  laravel-development:
+
+volumes:
+  mysql-data:
+  node-modules:
