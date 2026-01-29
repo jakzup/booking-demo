@@ -57,4 +57,5 @@ return [
     'email_required' => 'E-pošta je obvezna.',
     'email_invalid' => 'E-pošta mora biti veljaven e-poštni naslov.',
     'phone_required' => 'Telefonska številka je obvezna.',
+    'phone_invalid' => 'Telefonska številka mora biti veljavna.',
 ];

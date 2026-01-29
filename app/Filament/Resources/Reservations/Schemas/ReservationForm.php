@@ -38,11 +38,6 @@ class ReservationForm
                         'confirmed' => 'Confirmed',
                         'cancelled' => 'Cancelled'
                     ])
-                    ->colors([
-                        'pending' => 'warning',
-                        'confirmed' => 'success',
-                        'cancelled' => 'danger',
-                    ])
                     ->default('pending')
                     ->required(),
                 TextInput::make('contact_name')

@@ -23,7 +23,7 @@ class RoomBooking extends Component
         'checkOutDate' => 'required|date|after_or_equal:checkInDate',
         'contactName' => 'required|string|max:255',
         'email' => 'required|email|max:255',
-        'phone' => 'required|string|max:20',
+        'phone' => 'required|string|min:10|max:20',
     ];
 
     public function mount(Room $room)
@@ -38,8 +38,8 @@ class RoomBooking extends Component
         if ($this->checkInDate && $this->checkOutDate) {
             $checkIn = new \DateTime($this->checkInDate);
             $checkOut = new \DateTime($this->checkOutDate);
-            $nights = $checkIn->diff($checkOut)->days;
-            return $nights * $this->room->price_per_night;
+            $days = $checkIn->diff($checkOut)->days + 1;
+            return $days * $this->room->price_per_night;
         }
         return 0;
     }
@@ -112,6 +112,8 @@ class RoomBooking extends Component
             'email.required' => __('reservations.email_required'),
             'email.email' => __('reservations.email_invalid'),
             'phone.required' => __('reservations.phone_required'),
+            'phone.min' => __('reservations.phone_invalid'),
+            'phone.max' => __('reservations.phone_invalid'),
         ];
     }
 
