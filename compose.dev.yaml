@@ -1,6 +1,8 @@
 services:
   web:
-    image: nginx:alpine # Using the default Nginx image with custom configuration.
+    container_name: web
+    build:
+      context: ./docker/development/nginx
     volumes:
       # Mount the application code for live updates
       - ./:/var/www
@@ -18,6 +20,7 @@ services:
         condition: service_started # Wait for php-fpm to start
 
   php-fpm:
+    container_name: php-fpm
     # For the php-fpm service, we will use our common PHP-FPM Dockerfile with the development target
     build:
       context: .
@@ -46,6 +49,7 @@ services:
         condition: service_healthy # Wait for mysql to be healthy
 
   workspace:
+    container_name: workspace
     build:
       context: .
       dockerfile: ./docker/development/workspace/Dockerfile
@@ -73,9 +77,12 @@ services:
       - laravel-development
 
   mysql:
+    container_name: mysql
     image: mysql:8.0
     ports:
       - "${DB_PORT:-3306}:3306"
+    env_file:
+      - .env
     environment:
       MYSQL_DATABASE: "${DB_DATABASE:-app}"
       #MYSQL_USER: "${DB_USERNAME:-laravel}"

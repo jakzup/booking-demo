@@ -55,6 +55,9 @@ RUN sed -i "s/user = www-data/user = www/g" /usr/local/etc/php-fpm.d/www.conf &&
     sed -i "s/group = www-data/group = $group_name/g" /usr/local/etc/php-fpm.d/www.conf
 
 
+# Copy custom PHP-FPM listen configuration
+COPY ./docker/development/php-fpm/listen.conf /usr/local/etc/php-fpm.d/listen.conf
+
 # Set the working directory
 WORKDIR /var/www
 
