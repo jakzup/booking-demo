@@ -45,7 +45,7 @@ services:
       mysql:
         condition: service_healthy # Wait for mysql to be healthy
 
-  wworkspace:
+  workspace:
     build:
       context: .
       dockerfile: ./docker/development/workspace/Dockerfile
@@ -72,15 +72,14 @@ services:
     networks:
       - laravel-development
 
-
   mysql:
     image: mysql:8.0
     ports:
       - "${DB_PORT:-3306}:3306"
     environment:
       MYSQL_DATABASE: "${DB_DATABASE:-app}"
-      MYSQL_USER: "${DB_USERNAME:-laravel}"
-      MYSQL_PASSWORD: "${DB_PASSWORD:-secret}"
+      #MYSQL_USER: "${DB_USERNAME:-laravel}"
+      #MYSQL_PASSWORD: "${DB_PASSWORD:-secret}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:-secret}"
     volumes:
       - mysql-data:/var/lib/mysql
@@ -91,7 +90,6 @@ services:
       interval: 10s
       retries: 5
       timeout: 5s
-
 
 networks:
   laravel-development:

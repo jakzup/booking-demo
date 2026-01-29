@@ -62,11 +62,8 @@ WORKDIR /var/www
 # COPY ./docker/development/php-fpm/entrypoint.sh /usr/local/bin/entrypoint.sh
 # RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Switch back to the non-privileged user to run the application
-USER www-data
-
-# Change the default command to run the entrypoint script
-# ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+# Run as root to allow php-fpm to switch to the www user
+USER root
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
