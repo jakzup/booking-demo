@@ -23,7 +23,13 @@ class ReservationInfolist
                 TextEntry::make('total_price')
                     ->money(),
                 TextEntry::make('status')
-                    ->badge(),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'confirmed' => 'success',
+                        'cancelled' => 'danger',
+                        default => 'gray',
+                    }),
                 TextEntry::make('contact_name'),
                 TextEntry::make('email')
                     ->label('Email address'),

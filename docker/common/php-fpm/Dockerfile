@@ -4,7 +4,8 @@ FROM php:8.4-fpm AS production
 # install system dependencies, PHP extensions, composer
 RUN apt-get update && apt-get install -y \
     zip unzip curl git \
-    && docker-php-ext-install pdo_mysql
+    libicu-dev \
+    && docker-php-ext-install pdo_mysql intl
 
 # Builds a dev-only layer on top of the production image
 FROM production AS development

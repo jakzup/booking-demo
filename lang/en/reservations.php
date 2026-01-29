@@ -57,4 +57,5 @@ return [
     'email_required' => 'Email is required.',
     'email_invalid' => 'Email must be a valid email address.',
     'phone_required' => 'Phone number is required.',
+    'phone_invalid' => 'Phone number must be a valid format.',
 ];

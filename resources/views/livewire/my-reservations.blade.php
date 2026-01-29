@@ -17,7 +17,7 @@
     @else
         <div class="space-y-4">
             @foreach($reservations as $reservation)
-                <div class="border rounded-lg p-6 {{ $reservation->status === 'cancelled' ? 'bg-gray-50' : 'bg-white' }}">
+                <div class="border rounded-lg p-6 max-w-2xl bg-gray-50 dark:bg-zinc-900">
                     <div class="flex justify-between items-start">
                         <div class="flex-1">
                             <h3 class="text-xl font-semibold mb-2">{{ $reservation->room?->title ?? __('reservations.room_not_available') }}</h3>
@@ -53,6 +53,7 @@
                                 <span class="inline-block px-3 py-1 rounded text-sm font-semibold
                                     @if($reservation->status === 'confirmed') bg-green-100 text-green-800
                                     @elseif($reservation->status === 'pending') bg-yellow-100 text-yellow-800
+                                    @elseif($reservation->status === 'cancelled') bg-red-100 text-red-800
                                     @else bg-gray-100 text-gray-800
                                     @endif">
                                     {{ __('reservations.status_' . $reservation->status) }}

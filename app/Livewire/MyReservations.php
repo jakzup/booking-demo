@@ -12,7 +12,7 @@ class MyReservations extends Component
     {
         $reservations = Reservation::where('user_id', Auth::id())
             ->with('room')
-            ->orderBy('check_in_date', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('livewire.my-reservations', [

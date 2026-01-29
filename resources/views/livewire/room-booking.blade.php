@@ -79,13 +79,11 @@
                                 <flux:error name="checkOutDate" />
                             </flux:field>
 
-                            @if($this->totalPrice > 0)
-                                <div class="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg mb-6">
-                                    <flux:heading size="lg">
-                                        {{ __('rooms.total_price') }}: ${{ number_format($this->totalPrice, 2) }}
-                                    </flux:heading>
-                                </div>
-                            @endif
+                            <div class="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-lg mb-6">
+                                <flux:heading size="lg">
+                                    {{ __('rooms.total_price') }}: ${{ number_format($this->totalPrice, 2) }}
+                                </flux:heading>
+                            </div>
 
                             <flux:button type="submit" variant="primary" class="w-full">
                                 {{ __('Next') }}
