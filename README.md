@@ -3,7 +3,7 @@
 ```
 cp .env.example .env
 
-docker compose -f compose.dev.yaml up --build -d
+docker compose up --build -d
 
 docker exec -it workspace bash
 
@@ -15,6 +15,9 @@ php artisan migrate
 
 # optional - insert some dummy data
 php artisan db:seed RoomSeeder
+
+
+App will be run on localhost:8080
 ```
 
 
