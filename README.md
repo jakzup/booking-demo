@@ -16,8 +16,14 @@ php artisan migrate
 # optional - insert some dummy data
 php artisan db:seed RoomSeeder
 
-
-App will be run on localhost:8080
+# restart the containers:
+docker compose restart
 ```
 
 
+# Access the application
+**Frontend:** `http://localhost:8080/`
+
+**Admin panel:** `http://localhost:8080/admin`
+
+**CMS panel:** `http://localhost:8080/cms`
