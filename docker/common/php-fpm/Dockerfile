@@ -5,7 +5,11 @@ FROM php:8.4-fpm AS production
 RUN apt-get update && apt-get install -y \
     zip unzip curl git \
     libicu-dev \
-    && docker-php-ext-install pdo_mysql intl
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql intl gd exif
 
 # Builds a dev-only layer on top of the production image
 FROM production AS development
@@ -61,6 +65,14 @@ COPY ./docker/development/php-fpm/listen.conf /usr/local/etc/php-fpm.d/listen.co
 
 # Set the working directory
 WORKDIR /var/www
+
+# Create storage directories and symlink (automates file upload setup)
+RUN mkdir -p storage/app/public \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs && \
+    ln -s storage/app/public public/storage || true
 
 # Copy the entrypoint script
 # COPY ./docker/development/php-fpm/entrypoint.sh /usr/local/bin/entrypoint.sh
